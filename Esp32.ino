@@ -154,10 +154,10 @@ const char index_html[] PROGMEM = R"rawliteral(
   <div id="main-container">
     
     <div class="control-pad">
-      <button class="btn-move up" ontouchstart="send('F')" ontouchend="send('P')">&#9650;</button> 
-      <button class="btn-move left" ontouchstart="send('L')" ontouchend="send('P')">&#9664;</button> 
+      <button class="btn-move up" ontouchstart="send('F')" ontouchend="send('P')">&#9650;</button>
+      <button class="btn-move left" ontouchstart="send('R')" ontouchend="send('P')">&#9664;</button> 
       <button class="btn-stop stop" onclick="send('P')">&#9632;</button> 
-      <button class="btn-move right" ontouchstart="send('R')" ontouchend="send('P')">&#9654;</button> 
+      <button class="btn-move right" ontouchstart="send('L')" ontouchend="send('P')">&#9654;</button> 
       <button class="btn-move down" ontouchstart="send('B')" ontouchend="send('P')">&#9660;</button> 
     </div>
 
