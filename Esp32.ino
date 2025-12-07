@@ -87,28 +87,26 @@ const char index_html[] PROGMEM = R"rawliteral(
     input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 25px; height: 25px; border-radius: 50%; background: #3498db; cursor: pointer; }
     
     /* --- BAGIAN KANAN: SERVO & CALIBRATE --- */
-    .action-pad { display: grid; grid-template-columns: repeat(2, 90px); gap: 10px; }
+    .action-pad { display: grid; grid-template-columns: repeat(3, 80px); grid-template-rows: repeat(3, 80px); gap: 5px; }
 
     /* --- DESAIN TOMBOL UMUM --- */
     button { 
       border-radius: 12px; border: none; font-size: 28px; cursor: pointer; color: white; 
       box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.1s; 
-      -webkit-tap-highlight-color: transparent; 
+      -webkit-tap-highlight-color: transparent;
       pointer-events: auto; /* Pastikan tombol bisa diklik */
     }
     button:active { transform: scale(0.95); box-shadow: 0 2px 3px rgba(0,0,0,0.2); }
     
     .btn-move { width: 80px; height: 80px; background: linear-gradient(145deg, #3498db, #2980b9); }
     .btn-stop { width: 80px; height: 80px; background: linear-gradient(145deg, #e74c3c, #c0392b); font-size: 20px; }
-    .btn-servo { width: 90px; height: 65px; background: linear-gradient(145deg, #2ecc71, #27ae60); font-size: 16px; font-weight: bold; }
+    .btn-servo { width: 80px; height: 80px; background: linear-gradient(145deg, #2ecc71, #27ae60); font-size: 16px; font-weight: bold; }
 
     /* --- TOMBOL CALIBRATE --- */
     .btn-calib {
-      grid-column: span 2; 
-      width: 100%; height: 50px;
+      width: 80px; height: 80px;
       background: linear-gradient(145deg, #f39c12, #d35400); 
       font-size: 16px; font-weight: bold; letter-spacing: 1px;
-      margin-top: 5px;
     }
 
     /* --- GRID POSITIONING --- */
@@ -117,6 +115,13 @@ const char index_html[] PROGMEM = R"rawliteral(
     .stop { grid-column: 2; grid-row: 2; }
     .right { grid-column: 3; grid-row: 2; }
     .down { grid-column: 2; grid-row: 3; }
+
+    /* --- GRID POSITIONING (SERVO) --- */
+    .servo-up { grid-column: 2; grid-row: 1; }
+    .servo-left { grid-column: 1; grid-row: 2; }
+    .servo-center { grid-column: 2; grid-row: 2; }
+    .servo-right { grid-column: 3; grid-row: 2; }
+    .servo-down { grid-column: 2; grid-row: 3; }
 
     /* --- PERINGATAN PORTRAIT --- */
     #portrait-warning {
@@ -168,12 +173,11 @@ const char index_html[] PROGMEM = R"rawliteral(
     </div>
 
     <div class="action-pad">
-      <button class="btn-servo" onclick="send('T')">LIFT<br>&#9650;</button>
-      <button class="btn-servo" onclick="send('C')">GRIP<br>OPEN</button>
-      <button class="btn-servo" onclick="send('X')">LIFT<br>&#9660;</button>
-      <button class="btn-servo" onclick="send('S')">GRIP<br>CLOSE</button>
-      
-      <button class="btn-calib" onclick="send('A')">CALIBRATE</button>
+      <button class="btn-servo servo-up" onclick="send('T')">LIFT<br>&#9650;</button>
+      <button class="btn-servo servo-left" onclick="send('C')">GRIP<br>OPEN</button>
+      <button class="btn-calib servo-center" onclick="send('A')">CALIB</button>
+      <button class="btn-servo servo-right" onclick="send('S')">GRIP<br>CLOSE</button>
+      <button class="btn-servo servo-down" onclick="send('X')">LIFT<br>&#9660;</button>
     </div>
 
   </div>
@@ -183,7 +187,7 @@ const char index_html[] PROGMEM = R"rawliteral(
   document.addEventListener('contextmenu', event => event.preventDefault());
 
   function goFullscreen() {
-    var elem = document.documentElement;
+    var elem = document.documentElement
     if (elem.requestFullscreen) { elem.requestFullscreen(); }
     else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
   }
