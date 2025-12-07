@@ -231,25 +231,26 @@ void setup() {
 
 // ==================== LOOP ====================
 void loop() {
-    // Cek perintah dari Serial Monitor (Keyboard Laptop)
-    if (Serial.available()) {
-        bluetoothMode = false; // Mode Serial
-        char command = Serial.read();
-        processSerialCommand(command);
-    }
+  if (Serial.available()) {
+    char cmd = Serial.peek(); // Intip karakter pertama
     
-    // Cek perintah dari Bluetooth (Aplikasi HP)
-    if (bluetooth.available()) {
-        bluetoothMode = true; // Mode Bluetooth
-        char command = bluetooth.read();
-        
-        // Debugging: Lihat apa yang dikirim HP
-        Serial.print("BT IN: ");
-        Serial.println(command);
-        
-        processBluetoothCommand(command);
+    // Jika perintah diawali huruf 'V', itu adalah data slider PWM
+    if (cmd == 'V') {
+      Serial.read(); // Buang huruf 'V'
+      int pwmValue = Serial.parseInt(); // Baca angkanya (0-255)
+      
+      // Update kecepatan motor (Tanpa ganggu servo)
+      motorCtrl.setSpeed(pwmValue, pwmValue); 
+      
+      // Bersihkan sisa karakter (newline/spasi)
+      while(Serial.available()) Serial.read(); 
     }
-    delay(10);
+    else {
+      // Jika bukan V, berarti perintah biasa (F, B, L, R, dll)
+      char command = Serial.read();
+      processCommand(command);
+    }
+  }
 }
 
 // ==================== PROCESS BLUETOOTH COMMANDS ====================
